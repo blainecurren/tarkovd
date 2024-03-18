@@ -1,15 +1,18 @@
-import { request, gql } from "graphql-request";
-
-const query = gql`
-  {
-    items(name: "m55a1") {
-      id
-      name
-      shortName
-    }
-  }
-`;
-
-request("https://api.tarkov.dev/graphql", query).then((data) =>
-  console.log(data)
-);
+fetch("https://api.tarkov.dev/graphql", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  body: JSON.stringify({
+    query: `{
+        items(){
+            id
+            name
+            shortName
+        }
+    }`,
+  }),
+})
+  .then((r) => r.json())
+  .then((data) => console.log("data returned:", data));
